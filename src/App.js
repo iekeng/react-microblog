@@ -1,16 +1,21 @@
-import Container from 'react-bootstrap/Container'
-import Header from './components/Header'
-import Posts from './components/Posts'
-import Body from './components/Body'
+import {BrowserRouter, Routes, Route, Navigate} from react-router-dom;
+import Container from 'react-bootstrap/Container';
+import Header from './components/Header';
+import LoginPage from './pages/LoginPage';
+import FeedPage from './pages/FeedPage';
+import ExplorePage from './pages/ExplorePage';
 
 function App() {
     return (
       <>
       <Container fluid className="App">
         <Header />
-        <Body sidebar>
-          <Posts />
-        </Body>
+        <Routes>
+          <Route path="/" element={<FeedPage />}/>
+          <Route path="/explore" element={<LoginPage/>}/>
+          <Route path="/page" element={<ExplorePage />}/>
+          <Route path="*" element={<Navigate to="/" />}/>
+        </Routes>
     </Container>
     </>
   );
