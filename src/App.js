@@ -1,41 +1,24 @@
 import Container from 'react-bootstrap/Container'
+import Stack from 'react-bootstrap/Stack'
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
+import Posts from './components/Posts'
 
 function App() {
-  const posts = [
-    {
-      id: 1,
-      text: 'Hello, world!',
-      timestamp: 'a minute ago',
-      author: {
-        username: 'susan',
-      },
-    },
-    {
-      id: 2,
-      text: 'Second post',
-      timestamp: 'an hour ago',
-      author: {
-        username: 'john',
-      },
-    },
-  ];
-  return (
-    <Container fluid className="App">
-    <h1>Microblog</h1>
-      {posts.length === 0 ? 
-        <p>There is nothing to show here.</p> 
-      :
-      posts.map((post) => {
-        return (
-         <p key={post.id}>
-           <b>{post.author.username}</b> &mdash; {post.timestamp}
-           <br /> 
-           {post.text}
-         </p>
-        );
-     })
-      }
+    return (
+      <>
+      <Container fluid className="App">
+        <Header />
+        <Container>
+          <Stack direction="horizontal">
+            <Sidebar />
+              <Container>
+              <Posts />
+            </Container>
+        </Stack>
+      </Container>
     </Container>
+    </>
   );
 }
 
