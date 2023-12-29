@@ -4,6 +4,7 @@ import Header from './components/Header';
 import LoginPage from './pages/LoginPage';
 import FeedPage from './pages/FeedPage';
 import ExplorePage from './pages/ExplorePage';
+import UserPage from './pages/UserPage';
 
 export default function App() {
     return (
@@ -13,8 +14,9 @@ export default function App() {
           <Header />
           <Routes>
             <Route path="/" element={<FeedPage />}/>
-            <Route path="/explore" element={<LoginPage/>}/>
-            <Route path="/page" element={<ExplorePage />}/>
+            <Route path="/login" element={<LoginPage />}/>
+            <Route path="/explore" element={<ExplorePage />}/>
+            <Route path="/user/:username" element={<UserPage />} />
             <Route path="*" element={<Navigate to="/" />}/>
           </Routes>
         </BrowserRouter>

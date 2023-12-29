@@ -19,12 +19,16 @@
   width: 100%;
 }
 
+.Sidebar .nav-item .active {
+  background-color: #def;
+}
+
 .Sidebar a {
   color: #444;
 }
 
 .Sidebar a:hover {
-  background-color: #eee;
+  background-color: #423535;
 }
 
 .Sidebar a:visited {
