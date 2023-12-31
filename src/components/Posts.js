@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import Post from './Post'
 import { useApi } from '../contexts/ApiProvider';
 
-const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
-
 export default function Posts() {
 
     const [posts, setPosts] = useState()
@@ -12,7 +10,7 @@ export default function Posts() {
 
     useEffect(() => {
         (async () => {
-            const response = await api.get('/feed');
+            let response = await api.get('/feed');
             if (response.ok) {
                 setPosts(response.body.data)
             } else {

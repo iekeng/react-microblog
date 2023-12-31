@@ -6,7 +6,7 @@ export default class MicroblogApiClient {
   }
 
   async request(options) {
-    let query = URLSearchParams(options.query || {}).toString()
+    let query = new URLSearchParams(options.query || {}).toString()
 
     if (query !== ''){
         query = '?' + query
@@ -45,14 +45,14 @@ export default class MicroblogApiClient {
   }
 
   async post(url, body, options) {
-    this.request({method:'POST', url, body, ...options.})
+    this.request({method:'POST', url, body, ...options})
   }
  
   async put(url, body, options) {
-    this.request({method:'PUT', url, body, ...options.})
+    this.request({method:'PUT', url, body, ...options})
   }
   
   async delete(url, options) {
-    this.request({method:'DELETE', url, ...options.})
+    this.request({method:'DELETE', url, ...options})
   }
 }
