@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Body from '../components/Body';
 import InputField from '../components/InputField';
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import 
 
 export default function RegistrationPage() {
   const [formErrors, setFormErrors] = useState({});
@@ -10,6 +12,11 @@ export default function RegistrationPage() {
   const emailField = useRef();
   const passwordField = useRef();
   const password2Field = useRef();
+
+  
+  useEffect(() => {
+    usernameField.current.focus();
+  }, []);
 
   const onSubmit = async (event) => {
     //TODO;
