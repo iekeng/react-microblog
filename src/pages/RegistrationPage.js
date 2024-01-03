@@ -4,7 +4,8 @@ import Body from '../components/Body';
 import InputField from '../components/InputField';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 
+import { useApi } from '../contexts/ApiProvider';
+import { useFlash } from '../contexts/FlashProvider';
 
 export default function RegistrationPage() {
   const [formErrors, setFormErrors] = useState({});
@@ -12,15 +13,34 @@ export default function RegistrationPage() {
   const emailField = useRef();
   const passwordField = useRef();
   const password2Field = useRef();
+  const navigate = useNavigate();
+  const api = useApi();
+  const flash = useFlash();
 
-  
   useEffect(() => {
     usernameField.current.focus();
   }, []);
 
   const onSubmit = async (event) => {
-    //TODO;
-  }
+    event.preventDefault();
+    if (passwordField.current.value !== password2Field.current.value) {
+      setFormErrors({password2: "Passwords don't match"});
+    } else {
+        const data = await api.post('/users', {
+          username: usernameField.current.value,
+          email: emailField.current.value,
+          password: passwordField.current.value
+        });
+        if (!data.ok){
+          setFormErrors(data.body.errors.json);
+        } else {
+          setFormErrors({});
+          console.log("Success!")
+          flash('You have successfully registered', 'success')
+          navigate('/login');
+        }
+      }
+    };
 
   return (
     <Body>
@@ -33,10 +53,10 @@ export default function RegistrationPage() {
           name="email" label="Email"
           error={formErrors.email} fieldRef={emailField} />
         <InputField
-          name="password" label="Password"
+          name="password" label="Password" type="password"
           error={formErrors.password} fieldRef={passwordField} />
         <InputField
-          name="password" label="Password again"
+          name="password2" label="Password again" type="password"
           error={formErrors.password2} fieldRef={password2Field} />
         <Button variant='primary' type="submit">Register</Button>
       </Form>

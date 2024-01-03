@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import InputField from '../components/InputField'
+import { Link } from 'react-router-dom';
 
 export default function LoginPage() {
   const [formErrors, setFormErrors] = useState({})
@@ -47,6 +48,8 @@ export default function LoginPage() {
           fieldRef={passwordField} error={formErrors.password} />
         <Button variant="primary" type="submit">Login</Button>
       </Form>
+      <hr />
+      <p>Don&apos;t have an account? <Link to="/register">Register here</Link>!</p>
     </Body>
 )
 }

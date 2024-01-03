@@ -12,47 +12,49 @@ export default class MicroblogApiClient {
         query = '?' + query
     }
 
+    let data = {
+      method: options.method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      body: options.body ? JSON.stringify(options.body) : null,
+    }
     let response;
     try {
-        response = await fetch(this.base_url + options.url + query, {
-          method: options.method,
-          headers: {
-            'Content-Type': 'application/JSON',
-            ...options.headers,
-          },
-          body: options.body ? JSON.stringify(options.body) : null,
-        });
+        response = await fetch(this.base_url + options.url + query, data);
 
-        return {
-          ok: response.ok,
-          status: response.status,
-          body: response.status !== 204 ? await response.json() : null
-        };
     } catch (error) {
       response = {
         ok: false,
         status: 500,
-        json: async () => { return {
+        json: async() => { return {
           code: 500,
           message: 'The server is unresponsive',
           description: error.toString(),
-        }; }
+        } }
       };
     }
+    
+    return {
+      ok: response.ok,
+      status: response.status,
+      body: response.status !== 204 ? await response.json() : null
+    };
   }
   async get(url, query, options){
     return this.request({method:'GET', url, query, ...options})
   }
 
   async post(url, body, options) {
-    this.request({method:'POST', url, body, ...options})
+    return this.request({method:'POST', url, body, ...options})
   }
  
   async put(url, body, options) {
-    this.request({method:'PUT', url, body, ...options})
+    return this.request({method:'PUT', url, body, ...options})
   }
   
   async delete(url, options) {
-    this.request({method:'DELETE', url, ...options})
+    return this.request({method:'DELETE', url, ...options})
   }
 }

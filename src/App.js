@@ -7,23 +7,26 @@ import ExplorePage from './pages/ExplorePage';
 import UserPage from './pages/UserPage';
 import ApiProvider from './contexts/ApiProvider'
 import RegistrationPage from './pages/RegistrationPage';
+import FlashProvider from './contexts/FlashProvider';
 
 export default function App() {
     return (
       <>
       <Container fluid className="App">
         <BrowserRouter>
-        <ApiProvider>
-          <Header />
-            <Routes>
-              <Route path="/" element={<FeedPage />}/>
-              <Route path="/login" element={<LoginPage />}/>
-              <Route path="/explore" element={<ExplorePage />}/>
-              <Route path="/register" element={<RegistrationPage />}/>
-              <Route path="/user/:username" element={<UserPage />} />
-              <Route path="*" element={<Navigate to="/" />}/>
-            </Routes>
-          </ApiProvider>
+          <FlashProvider>
+            <ApiProvider>
+              <Header />
+              <Routes>
+                <Route path="/" element={<FeedPage />}/>
+                <Route path="/login" element={<LoginPage />}/>
+                <Route path="/explore" element={<ExplorePage />}/>
+                <Route path="/register" element={<RegistrationPage />}/>
+                <Route path="/user/:username" element={<UserPage />} />
+                <Route path="*" element={<Navigate to="/" />}/>
+              </Routes>
+            </ApiProvider>
+          </FlashProvider>
         </BrowserRouter>
     </Container>
     </>
