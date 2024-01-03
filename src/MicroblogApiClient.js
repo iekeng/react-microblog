@@ -62,7 +62,7 @@ export default class MicroblogApiClient {
   async login(username, password){
     const response = await this.post('/tokens', null, {
       headers: {
-        Authorization: 'Basic ' + btoa(username '+' password)
+        Authorization: 'Basic ' + btoa(username + ":" + password)
       }
     });
     if (!response.ok){
