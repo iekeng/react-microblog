@@ -12,18 +12,17 @@ export default class MicroblogApiClient {
         query = '?' + query
     }
 
-    let data = {
-      method: options.method,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-        ...options.headers,
-      },
-      body: options.body ? JSON.stringify(options.body) : null,
-    }
     let response;
     try {
-        response = await fetch(this.base_url + options.url + query, data);
+        response = await fetch(this.base_url + options.url + query, {
+          method: options.method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            ...options.headers,
+          },
+          body: options.body ? JSON.stringify(options.body) : null,
+        });
 
     } catch (error) {
       response = {
@@ -80,5 +79,4 @@ export default class MicroblogApiClient {
   isAuthenticated() {
     return localStorage.getItem('accessToken') !== null;
   }
-
 }
