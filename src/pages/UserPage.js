@@ -32,7 +32,6 @@ export default function UserPage() {
               :  
               <>
                 <Stack direction="horizontal" gap={4}>
-                    { console.log(`${user.first_seen}`) }
                     <Image src="{user.avatar_url}" roundedCircle />
                     <div>
                         <h1>{ user.username }</h1>

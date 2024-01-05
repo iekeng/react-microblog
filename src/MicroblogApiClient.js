@@ -6,6 +6,20 @@ export default class MicroblogApiClient {
   }
 
   async request(options) {
+    let response = await this.requestInternal(options);
+    if (response.status === 401 && options.url === '/tokens'){
+      const refreshResponse = await this.put('/tokens', {
+        access_token: localStorage.getItem('accessToken'),
+      });
+      if (refreshResponse.ok){
+        localStorage.setItem('accessToken', refreshResponse.body.access_token);
+        response = await this.requestInternal(options);
+      }
+    }
+    return response;
+  }
+
+  async requestInternal(options) {
     let query = new URLSearchParams(options.query || {}).toString()
 
     if (query !== ''){
@@ -21,6 +35,7 @@ export default class MicroblogApiClient {
             'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
             ...options.headers,
           },
+          credentials: options.url === '/tokens' ? 'include' : 'omit',
           body: options.body ? JSON.stringify(options.body) : null,
         });
 
@@ -66,8 +81,9 @@ export default class MicroblogApiClient {
     });
     if (!response.ok){
       return response.status === 401 ? 'fail' : 'error';
+    } else { 
+      localStorage.setItem('accessToken', response.body.access_token);
     }
-    localStorage.setItem('accessToken', response.body.access_token);
     return 'ok';
   }
 

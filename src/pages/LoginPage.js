@@ -47,6 +47,7 @@ export default function LoginPage() {
     if (result === 'fail') {
       flash('Invalid username or password', 'danger');
     } else if (result === 'ok') {
+      console.log(result)
       let next = '/';
       if (location.state && location.state.next) {
         next = location.state.next;
