@@ -6,9 +6,11 @@ import TimeAgo from '../components/TimeAgo'
 import Stack from 'react-bootstrap/Stack';
 import  { useApi } from '../contexts/ApiProvider'
 import { useUser } from '../contexts/UserProvider';
-import { useEffect, useState, useNavigate } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Posts from '../components/Posts';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import { useFlash } from '../contexts/FlashProvider';
 
 export default function UserPage() {
   const [user, setUser] = useState();
@@ -17,6 +19,7 @@ export default function UserPage() {
   const {user: loggedInUser} = useUser();
   const navigate = useNavigate();
   const api = useApi();
+  const flash = useFlash();
   
   useEffect(() => {
     (async() => {
@@ -47,12 +50,28 @@ export default function UserPage() {
   }
 
   const follow = async () => {
-    //TODO
-  }
+    const response = await api.post('/me/following/' + user.id);
+    if (response.ok) {
+      flash(
+        <>
+          You are now following <b>{user.username}</b>.
+        </>, 'success'
+      );
+      setIsFollower(true);
+    }
+  };
 
   const unfollow = async () => {
-    //TODO
-  }
+    const response = await api.delete('/me/following/' + user.id);
+    if (response.ok) {
+      flash(
+        <>
+          You have unfollowed <b>{user.username}</b>.
+        </>, 'success'
+      );
+      setIsFollower(false);
+    }
+  };
 
   return (
     <Body sidebar>
@@ -80,7 +99,7 @@ export default function UserPage() {
                   <Button vraint="primary" onClick={follow}>Follow</Button>
                 }
                 {isFollower === true &&
-                  <Button vraint="primary" onClick={unfollow}>Follow</Button>
+                  <Button vraint="primary" onClick={unfollow}>Unfollow</Button>
                 }
               </div>
             </Stack>
