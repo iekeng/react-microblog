@@ -12,6 +12,7 @@ import UserProvider from './contexts/UserProvider';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import EditUserPage from './pages/EditUserPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 
 export default function App() {
     return (
@@ -32,6 +33,7 @@ export default function App() {
                   <Route path='*' element={
                     <PrivateRoute>
                       <Routes>
+                        <Route path="/password" element={<ChangePasswordPage />} />
                         <Route path="/" element={<FeedPage />}/>
                         <Route path="/explore" element={<ExplorePage />}/>
                         <Route path="/user/:username" element={<UserPage />} />
