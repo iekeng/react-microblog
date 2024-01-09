@@ -1,10 +1,13 @@
 import Body from '../components/Body'
 import Posts from '../components/Posts'
+import { useUser } from '../contexts/UserProvider'
 
 export default function FeedPage() {
-    return(
-        <Body sidebar>
-            <Posts content='feed'/>
-        </Body>
-    )
+  const { user } = useUser()
+  console.log(user)
+  return(
+    <Body sidebar>
+      <Posts write={true} content={user.id} />
+    </Body>
+  )
 }

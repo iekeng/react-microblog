@@ -11,6 +11,7 @@ import FlashProvider from './contexts/FlashProvider';
 import UserProvider from './contexts/UserProvider';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
+import EditUserPage from './pages/EditUserPage';
 
 export default function App() {
     return (
@@ -35,6 +36,7 @@ export default function App() {
                         <Route path="/explore" element={<ExplorePage />}/>
                         <Route path="/user/:username" element={<UserPage />} />
                         <Route path="*" element={<Navigate to="/" />}/>
+                        <Route path="/edit" element={<EditUserPage />}/>
                       </Routes>
                     </PrivateRoute>
                   }/>
