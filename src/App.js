@@ -13,6 +13,8 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import EditUserPage from './pages/EditUserPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+import ResetRequestPage from './pages/ResetRequestPage';
+import ResetPage from './pages/ResetPage';
 
 export default function App() {
     return (
@@ -30,6 +32,12 @@ export default function App() {
                   <Route path="/register" element={
                     <PublicRoute><RegistrationPage /></PublicRoute>
                   }/>
+                  <Route path="/reset-request" element={
+                    <PublicRoute><ResetRequestPage /></PublicRoute>
+                  } />
+                  <Route path="/reset" element={
+                    <PublicRoute><ResetPage /></PublicRoute>
+                  } />
                   <Route path='*' element={
                     <PrivateRoute>
                       <Routes>
