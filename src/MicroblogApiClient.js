@@ -93,7 +93,7 @@ export default class MicroblogApiClient {
 
   async logout(){
     await this.delete('/tokens');
-    localStorage.removeItem('acessToken');
+    localStorage.removeItem('accessToken');
   }
 
   isAuthenticated() {

@@ -101,3 +101,61 @@ test('logs in user with bad credentials', async() => {
   expect(urls).toHaveLength(1);
   expect(urls[0]).toMatch(/^http.*\/api\/tokens$/);
 })
+
+test('logs user out', async () => {
+  localStorage.setItem('accessToken', '123');
+
+  global.fetch
+    .mockImplementationOnce(url => {
+      return {
+        status: 200,
+        ok: true,
+        json: () => Promise.resolve({username: 'susan'}),
+      };
+    })
+    .mockImplementationOnce((url) => {
+      return {
+        status: 204,
+        ok: true,
+        json: () => Promise.resolve({}),
+      };
+    });
+
+  const Test = () => {
+    const { user, logout } = useUser();
+    if (user) {
+      return (
+        <>
+          <p>{user.username}</p>
+          <button onClick={logout}>logout</button>
+        </>
+      );
+    }
+    else if (user === null) {
+      return <p>logged out</p>;
+    }
+    else {
+      return null;
+    }
+  };
+
+  render(
+    <FlashProvider>
+      <ApiProvider>
+        <UserProvider>
+          <Test />
+        </UserProvider>
+      </ApiProvider>
+    </FlashProvider>
+  );
+
+  const element = await screen.findByText('susan');
+  const button = await screen.findByRole('button');
+  expect(element).toBeInTheDocument();
+  expect(button).toBeInTheDocument();
+
+  userEvent.click(button);
+  const element2 = await screen.findByText('logged out');
+  expect(element2).toBeInTheDocument();
+  expect(localStorage.getItem('accessToken')).toBeNull();
+});
