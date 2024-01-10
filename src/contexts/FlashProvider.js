@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useCallback } from "react";
 
 export const FlashContext = createContext();
 let flashTimer;
@@ -7,11 +7,11 @@ export default function FlashProvider({children}){
   const [flashMessage, setFlashMessage] = useState({});
   const [visible, setVisible] = useState(false);
 
-  const hideFlash = () => {
-    setVisible(false)
-  }
+  const hideFlash = useCallback(() => {
+    setVisible(false);
+  }, []);
 
-  const flash = (message, type, duration = 10) => {
+  const flash = useCallback((message, type, duration = 10) => {
     if (flashTimer){
       clearTimeout(flashTimer);
       flashTimer = undefined;
@@ -21,7 +21,7 @@ export default function FlashProvider({children}){
     if (duration){
       flashTimer = setTimeout(hideFlash, duration * 1000);
     }
-  }
+  }, [hideFlash]);
 
   return(
     <FlashContext.Provider value={{flash, hideFlash, flashMessage, visible}}>
