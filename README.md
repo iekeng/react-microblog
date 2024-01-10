@@ -71,4 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Tutorial Link  
 
-[Miguel Grinberg's React tutorial](https://blog.miguelgrinberg.com/post/introducing-the-react-mega-tutorial)
+Miguel Grinberg's React [tutorial](https://blog.miguelgrinberg.com/post/introducing-the-react-mega-tutorial)
